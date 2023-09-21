@@ -20,12 +20,12 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\Caden\Downloads\Aladdin_Liscence.txt
-InfoBeforeFile=C:\Users\Caden\Downloads\Info_File.txt
+LicenseFile=C:\Users\Caden\OneDrive\Documents\GitHub\System-Diagnostics\Aladdin_Liscense.txt
+InfoBeforeFile=C:\Users\Caden\OneDrive\Documents\GitHub\System-Diagnostics\Info_File.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputBaseFilename=System Diagnostics Installer
-SetupIconFile=C:\Users\Caden\Downloads\htop_103820.ico
+SetupIconFile=C:\Users\Caden\OneDrive\Documents\GitHub\System-Diagnostics\htop_103820.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -37,8 +37,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\Caden\source\repos\SystemDiagnostics\bin\Debug\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Program Files (x86)\Caden F\System Diagnostics Installer\htop_103820.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Caden\OneDrive\Documents\GitHub\System-Diagnostics\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Caden\OneDrive\Documents\GitHub\System-Diagnostics\htop_103820.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
