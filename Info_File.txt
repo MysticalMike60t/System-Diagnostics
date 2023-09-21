@@ -1,0 +1,36 @@
+System Diagnostics Application Information File
+Application Name: System Diagnostics
+
+Overview
+System Diagnostics is a powerful and comprehensive system diagnostics application designed to help users analyze, monitor, and optimize the performance of their computer systems. Whether you're a tech-savvy enthusiast or an IT professional, this program provides you with the tools and insights needed to keep your system running smoothly.
+
+Key Features
+System Information: Get detailed information about your hardware and software components, including CPU, RAM, GPU, storage devices, and installed software.
+
+History and Logs: Maintain a history of system performance and diagnostics results for reference and analysis.
+
+System Requirements
+Operating System: Windows 10 or later
+Processor: Intel Core i5 or equivalent
+RAM: 1GB minimum, 4GB recommended
+Storage: 100MB for installation, additional space for logs and reports
+Internet Connection: Required for updates and security checks
+Installation
+Download the installer from our official website: www.cadenmf.com.
+Run the installer and follow the on-screen instructions.
+Launch after installation.
+
+
+Privacy and Security
+We take your privacy and data security seriously. We only collects and stores system information necessary for diagnostics and monitoring. We do not share your data with third parties. For more information, please refer to our Privacy Policy on our website.
+
+Feedback
+We value your feedback and continuously strive to improve System Diagnostics. Please share your suggestions, bug reports, and feature requests through my personal website.
+
+Version History
+Version 1.0 (Initial Release) - Release Notes
+Version 1.1 (Current Version) - Release Notes
+Disclaimer
+This program is a diagnostic and monitoring tool intended for informational purposes. It does not replace professional IT support or security software. Use it responsibly and in accordance with local laws and regulations.
+
+Thank you for choosing us! We hope our application helps you maintain a healthy and high-performing computer system.
