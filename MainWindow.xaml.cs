@@ -448,5 +448,36 @@ namespace SystemDiagnostics
                 // Handle double-click action for the ProcessListView here
             }
         }
+
+        private void EndTaskButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button != null)
+            {
+                string processName = button.Tag as string;
+                if (!string.IsNullOrEmpty(processName))
+                {
+                    // Find the process by name and try to end it
+                    Process[] processes = Process.GetProcessesByName(processName);
+                    if (processes.Length > 0)
+                    {
+                        try
+                        {
+                            processes[0].Kill(); // End the process
+                            UpdateSystemInfo(); // Refresh the process list after ending the task
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"An error occurred while ending the task: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"The selected process '{processName}' was not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+        }
+
     }
 }

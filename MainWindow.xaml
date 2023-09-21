@@ -274,19 +274,36 @@ Margin="5,0" />
                                 </ListView.View>
                             </ListView>
                             <ListView Name="ProcessListView"
-                  Grid.Row="1"
-                  FontSize="14"
-                  Foreground="#666"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
-                  Margin="0,0,0,20"
-                  MouseDoubleClick="ProcessListView_MouseDoubleClick">
+          Grid.Row="1"
+          FontSize="14"
+          Foreground="#666"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          Margin="0,0,0,20"
+          MouseDoubleClick="ProcessListView_MouseDoubleClick">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Process Name" Width="200" DisplayMemberBinding="{Binding Name}" />
-                                        <GridViewColumn Header="CPU Usage (%) " Width="100" DisplayMemberBinding="{Binding CPUUsage}" />
+                                        <GridViewColumn Header="CPU Usage (%)" Width="100" DisplayMemberBinding="{Binding CPUUsage}" />
                                         <GridViewColumn Header="RAM Usage (MB)" Width="100" DisplayMemberBinding="{Binding RAMUsage}" />
                                         <GridViewColumn Header="Storage Usage (MB)" Width="150" DisplayMemberBinding="{Binding StorageUsage}" />
+                                        <!-- Add a column for the "End Task" button -->
+                                        <GridViewColumn Header="End Task" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="End Task"
+                                FontSize="12"
+                                Foreground="White"
+                                Background="#F44336"
+                                BorderThickness="0"
+                                Padding="5"
+                                Click="EndTaskButton_Click"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Tag="{Binding Name}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
