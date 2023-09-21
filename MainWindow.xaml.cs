@@ -17,6 +17,12 @@ namespace SystemDiagnostics
         private PerformanceCounter memoryCounter;
         private DispatcherTimer ramUsageTimer;
 
+        private DispatcherTimer liveUpdateTimer;
+        private const int LiveUpdateIntervalInSeconds = 10; // Set the update interval as needed (in seconds)
+
+        private List<ProcessInfo> topProcesses = new List<ProcessInfo>();
+
+
         private ObservableCollection<ProcessInfo> processList = new ObservableCollection<ProcessInfo>();
 
         public MainWindow()
@@ -28,7 +34,10 @@ namespace SystemDiagnostics
 
             CenterWindowOnScreen();
             UpdateSystemInfo();
+
+            InitializeLiveUpdateTimer(); // Add this line to initialize the live update timer
         }
+
 
         private void InitializeMemoryCounter()
         {
@@ -41,6 +50,14 @@ namespace SystemDiagnostics
             ramUsageTimer.Interval = TimeSpan.FromSeconds(1);
             ramUsageTimer.Tick += (sender, e) => UpdateRamUsage();
             ramUsageTimer.Start();
+        }
+
+        private void InitializeLiveUpdateTimer()
+        {
+            liveUpdateTimer = new DispatcherTimer();
+            liveUpdateTimer.Interval = TimeSpan.FromSeconds(LiveUpdateIntervalInSeconds);
+            liveUpdateTimer.Tick += (sender, e) => UpdateTopProcesses(ResourceType.CPU); // Update the top CPU processes
+            liveUpdateTimer.Start();
         }
 
         private void CenterWindowOnScreen()
@@ -83,7 +100,7 @@ namespace SystemDiagnostics
 
         private void UpdateSystemInfo()
         {
-            ProcessListView.ItemsSource = processList;
+            topProcesses.Clear();
 
             // Get the list of running processes
             var processes = Process.GetProcesses()
@@ -97,6 +114,9 @@ namespace SystemDiagnostics
                                    .OrderByDescending(process => process.CPUUsage)
                                    .Take(10) // Select the top 10 processes by CPU usage
                                    .ToList();
+
+            // Update the ListView with the new top processes
+            ProcessListView.ItemsSource = processes;
 
             // Add the top 10 processes to the processList collection
             foreach (var process in processes)
@@ -325,9 +345,9 @@ namespace SystemDiagnostics
 
         private void UpdateTopProcesses(ResourceType resourceType)
         {
-            // Get the list of running processes
+            // Get the list of running processes and convert them to ProcessInfo objects
             var processes = Process.GetProcesses()
-                                   .Select(process => new
+                                   .Select(process => new ProcessInfo
                                    {
                                        Name = process.ProcessName,
                                        CPUUsage = GetCPUUsage(process),
@@ -337,7 +357,7 @@ namespace SystemDiagnostics
                                    .ToList();
 
             // Choose a resource to sort by (CPU, RAM, or Storage)
-            IEnumerable<dynamic> sortedProcesses;
+            IEnumerable<ProcessInfo> sortedProcesses;
 
             switch (resourceType)
             {
@@ -355,17 +375,19 @@ namespace SystemDiagnostics
             }
 
             // Select the top 10 processes
-            var top10Processes = sortedProcesses.Take(10);
+            var top10Processes = sortedProcesses.Take(10).ToList();
 
-            ProcessListView.Items.Clear(); // Remove this line
+            // Clear the existing top processes from the UI
+            processList.Clear();
 
+            // Add the updated top processes to the collection
             foreach (var process in top10Processes)
             {
-                ListViewItem item = new ListViewItem();
-                item.Content = $"{process.Name} - CPU: {process.CPUUsage}% RAM: {process.RAMUsage} MB Storage: {process.StorageUsage} MB";
-                ProcessListView.Items.Add(item);
+                processList.Add(process);
             }
+
         }
+
 
         private enum ResourceType
         {
