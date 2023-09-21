@@ -449,7 +449,7 @@ namespace SystemDiagnostics
                     {
                         try
                         {
-                            processes[0].Kill(); 
+                            processes[0].Kill();
                             UpdateSystemInfo();
                         }
                         catch (Exception ex)
