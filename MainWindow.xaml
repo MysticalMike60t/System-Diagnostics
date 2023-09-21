@@ -181,23 +181,70 @@
         Height="20"
         FontSize="12"
         Foreground="White"
-        Background="Transparent"
         BorderBrush="Transparent"
         VerticalAlignment="Center"
         HorizontalAlignment="Right"
-        Margin="0,0,35,0"
-        Click="MinimizeButton_Click" />
+        Margin="0,0,35,0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <!-- Use an RGBA color with alpha component (e.g., 80 for 50% transparency) -->
+                                <Setter Property="Background" Value="#20000000" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+
             <Button Content="X"
-                Width="20"
-                Height="20"
-                FontSize="12"
-                Foreground="White"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Right"
-                Margin="0,0,10,0"
-                Click="CloseButton_Click" />
+        Width="20"
+        Height="20"
+        FontSize="12"
+        Foreground="White"
+        BorderBrush="Transparent"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Right"
+        Margin="0,0,10,0"
+        Click="CloseButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF4444" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
         </Grid>
         <Grid>
             <Grid.RowDefinitions>
