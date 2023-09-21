@@ -1,14 +1,9 @@
 ﻿<Window x:Class="SystemDiagnostics.MainWindow"
-       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-       xmlns:local="clr-namespace:SystemDiagnostics"
-       mc:Ignorable="d"
-       WindowStyle="None"
-       AllowsTransparency="True"
-       Title="System Diagnostics Dashboard" Height="450" Width="800"
-       Loaded="Window_Loaded">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:SystemDiagnostics" mc:Ignorable="d" WindowStyle="None" AllowsTransparency="True" Title="System Diagnostics Dashboard" Height="450" Width="800" Loaded="Window_Loaded">
     <Window.Effect>
         <DropShadowEffect Color="#000" Direction="0" ShadowDepth="5" Opacity="0.5" BlurRadius="5" />
     </Window.Effect>
@@ -113,7 +108,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
-                        <Border CornerRadius="1" Background="#c8c8c8" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0"  Height="8" Margin="0,0,-2,0"/>
+                        <Border CornerRadius="1" Background="#c8c8c8" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Height="8" Margin="0,0,-2,0"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -151,7 +146,7 @@
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.ColumnSpan="3" CornerRadius="0" Background="#006464"/>
-                <RepeatButton Grid.Column="0"  Style="{StaticResource ScrollBarLineButton}" Width="18" Command="ScrollBar.LineLeftCommand" Content="M 4 0 L 4 8 L 0 4 Z" />
+                <RepeatButton Grid.Column="0" Style="{StaticResource ScrollBarLineButton}" Width="18" Command="ScrollBar.LineLeftCommand" Content="M 4 0 L 4 8 L 0 4 Z" />
                 <Track Name="PART_Track" Grid.Column="1" IsDirectionReversed="False">
                     <Track.DecreaseRepeatButton>
                         <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
@@ -168,26 +163,54 @@
         </ControlTemplate>
     </Window.Resources>
 
-
     <Grid>
         <Grid x:Name="TitleBar" Background="#2196F3" MouseLeftButtonDown="CustomTitleBar_MouseLeftButtonDown" Height="30" VerticalAlignment="Top" Margin="0,0,0,-30">
-            <TextBlock Text="System Diagnostics Dashboard"
-                   FontSize="14"
-                   FontWeight="Bold"
-                   Foreground="White"
-                   VerticalAlignment="Center"
-                   Margin="10,0" />
-            <Button Content="X"
-                Width="20"
-                Height="20"
-                FontSize="12"
-                Foreground="White"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Right"
-                Margin="0,0,10,0"
-                Click="CloseButton_Click" />
+            <TextBlock Text="System Diagnostics Dashboard" FontSize="14" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" Margin="10,0" />
+            <Button Content="_" Width="20" Height="20" FontSize="12" Foreground="White" BorderBrush="Transparent" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,35,0">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#20000000" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+
+            <Button Content="X" Width="20" Height="20" FontSize="12" Foreground="White" BorderBrush="Transparent" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" Click="CloseButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF4444" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
         </Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -207,63 +230,54 @@
                     </Style>
                 </ScrollViewer.Resources>
                 <Grid>
-                    <StackPanel Grid.Row="1" Margin="20" VerticalAlignment="Top">
-                        <Label Content="CPU Information:"
-                   FontSize="16"
-                   FontWeight="Bold"
-                   Foreground="#444" />
-                        <TextBlock Name="CpuInfoTextBlock"
-                       FontSize="14"
-                       Foreground="#666"
-                       Margin="5,0" />
+                    <StackPanel Margin="20,20,20,0" VerticalAlignment="Top">
+                        <Label Content="CPU Information:" FontSize="16" FontWeight="Bold" Foreground="#444" />
+                        <TextBlock Name="CpuInfoTextBlock" FontSize="14" Foreground="#666" Margin="5,0" />
 
-                        <Label Content="Memory Information:"
-                   FontSize="16"
-                   FontWeight="Bold"
-                   Foreground="#444" />
-                        <TextBlock Name="MemoryInfoTextBlock"
-                       FontSize="14"
-                       Foreground="#666"
-                       Margin="5,0" />
-                        <TextBlock Name="RamUsageTextBlock"
-FontSize="14"
-Foreground="#666"
-Margin="5,0" />
-                        <Label Content="GPU Information:"
-                   FontSize="16"
-                   FontWeight="Bold"
-                   Foreground="#444" />
-                        <TextBlock Name="GpuInfoTextBlock"
-                       FontSize="14"
-                       Foreground="#666"
-                       Margin="5,0" />
-                        <Label Content="Operating System:"
-       FontSize="16"
-       FontWeight="Bold"
-       Foreground="#444" />
-                        <TextBlock Name="OsInfoTextBlock"
-           FontSize="14"
-           Foreground="#666"
-           Margin="5,0" />
+                        <Label Content="Memory Information:" FontSize="16" FontWeight="Bold" Foreground="#444" />
+                        <TextBlock Name="MemoryInfoTextBlock" FontSize="14" Foreground="#666" Margin="5,0" />
+                        <TextBlock Name="RamUsageTextBlock" FontSize="14" Foreground="#666" Margin="5,0" />
+                        <Label Content="GPU Information:" FontSize="16" FontWeight="Bold" Foreground="#444" />
+                        <TextBlock Name="GpuInfoTextBlock" FontSize="14" Foreground="#666" Margin="5,0" />
+                        <TextBlock Name="GpuVramInfoTextBlock" FontSize="14" Foreground="#666" Margin="5,0" />
+
+                        <Label Content="Operating System:" FontSize="16" FontWeight="Bold" Foreground="#444" />
+                        <TextBlock Name="OsInfoTextBlock" FontSize="14" Foreground="#666" Margin="5,0" />
 
                         <Label Content="Disk Space:" FontSize="16" FontWeight="Bold" Foreground="#444" />
 
-                        <Grid>
+                        <Grid Grid.Row="1">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <ListView Name="DiskSpaceListView"
-FontSize="14"
-Foreground="#666"
-HorizontalAlignment="Stretch"
-VerticalAlignment="Stretch">
+                            <ListView Name="DiskSpaceListView" FontSize="14" Foreground="#666" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0, 0, 0, 20" MouseDoubleClick="DiskSpaceListView_MouseDoubleClick">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Drive" Width="100" DisplayMemberBinding="{Binding Drive}" />
                                         <GridViewColumn Header="Free Space" Width="150" DisplayMemberBinding="{Binding FreeSpace}" />
+                                        <GridViewColumn Header="Disk Speed" Width="150" DisplayMemberBinding="{Binding DiskSpeed}" />
                                     </GridView>
                                 </ListView.View>
                             </ListView>
+                            <ListView Name="ProcessListView" Grid.Row="1" FontSize="14" Foreground="#666" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,20" MouseDoubleClick="ProcessListView_MouseDoubleClick">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Process Name" Width="200" DisplayMemberBinding="{Binding Name}" />
+                                        <GridViewColumn Header="CPU Usage (%)" Width="100" DisplayMemberBinding="{Binding CPUUsage}" />
+                                        <GridViewColumn Header="RAM Usage (MB)" Width="100" DisplayMemberBinding="{Binding RAMUsage}" />
+                                        <GridViewColumn Header="Storage Usage (MB)" Width="150" DisplayMemberBinding="{Binding StorageUsage}" />
+                                        <GridViewColumn Header="End Task" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="End Task" FontSize="12" Foreground="White" Background="#F44336" BorderThickness="0" Padding="5" Click="EndTaskButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Tag="{Binding Name}" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+
                         </Grid>
                     </StackPanel>
                 </Grid>
@@ -274,23 +288,11 @@ VerticalAlignment="Stretch">
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Content="Refresh"
-            FontSize="16"
-            Foreground="#FFF"
-            Background="#2196F3"
-            BorderThickness="0"
-            Padding="30"
-            Click="RefreshButton_Click"
-            HorizontalAlignment="Stretch">
+                <Button Content="Refresh" FontSize="16" Foreground="#FFF" Background="#2196F3" BorderThickness="0" Padding="30" Click="RefreshButton_Click" HorizontalAlignment="Stretch">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                        Background="#2196F3"
-                        CornerRadius="0"
-                        BorderBrush="Transparent"
-                        BorderThickness="0">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                      VerticalAlignment="Center" />
+                            <Border x:Name="border" Background="#2196F3" CornerRadius="0" BorderBrush="Transparent" BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -301,24 +303,11 @@ VerticalAlignment="Stretch">
                     </Button.Template>
                 </Button>
 
-                <Button Content="Export"
-            Grid.Column="1"
-            FontSize="16"
-            Foreground="#FFF"
-            Background="#4CAF50"
-            BorderThickness="0"
-            Padding="30"
-            Click="ExportButton_Click"
-            HorizontalAlignment="Stretch">
+                <Button Content="Export" Grid.Column="1" FontSize="16" Foreground="#FFF" Background="#4CAF50" BorderThickness="0" Padding="30" Click="ExportButton_Click" HorizontalAlignment="Stretch">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border x:Name="border"
-                        Background="#4CAF50"
-                        CornerRadius="0"
-                        BorderBrush="Transparent"
-                        BorderThickness="0">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                      VerticalAlignment="Center" />
+                            <Border x:Name="border" Background="#4CAF50" CornerRadius="0" BorderBrush="Transparent" BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
