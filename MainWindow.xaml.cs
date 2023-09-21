@@ -83,6 +83,10 @@ namespace SystemDiagnostics
             {
                 string gpuInfo = $"GPU: {obj["Name"]}";
                 GpuInfoTextBlock.Text = gpuInfo;
+
+                // Display GPU VRAM information
+                string vramInfo = $"VRAM: {FormatBytes(Convert.ToUInt64(obj["AdapterRAM"]))}";
+                GpuVramInfoTextBlock.Text = vramInfo;
             }
 
             ManagementObjectSearcher osSearcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem");
@@ -202,5 +206,19 @@ namespace SystemDiagnostics
         {
             Close();
         }
+
+        private void DiskSpaceListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DiskSpaceListView.SelectedItem != null)
+            {
+                // Assuming that you have a "Drive" property in your data model class
+                // Replace 'YourDataModel' with the actual class name
+                string selectedDrive = ((DiskSpaceInfo)DiskSpaceListView.SelectedItem).Drive;
+
+                // Use Process.Start to open the selected drive in File Explorer
+                Process.Start(selectedDrive);
+            }
+        }
+
     }
 }

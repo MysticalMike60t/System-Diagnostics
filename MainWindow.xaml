@@ -237,6 +237,11 @@ Margin="5,0" />
                        FontSize="14"
                        Foreground="#666"
                        Margin="5,0" />
+                        <TextBlock Name="GpuVramInfoTextBlock"
+           FontSize="14"
+           Foreground="#666"
+           Margin="5,0" />
+
                         <Label Content="Operating System:"
        FontSize="16"
        FontWeight="Bold"
@@ -253,10 +258,11 @@ Margin="5,0" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <ListView Name="DiskSpaceListView"
-FontSize="14"
-Foreground="#666"
-HorizontalAlignment="Stretch"
-VerticalAlignment="Stretch">
+          FontSize="14"
+          Foreground="#666"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          MouseDoubleClick="DiskSpaceListView_MouseDoubleClick">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Drive" Width="100" DisplayMemberBinding="{Binding Drive}" />
