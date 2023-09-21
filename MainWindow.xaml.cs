@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Management;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -13,6 +16,8 @@ namespace SystemDiagnostics
     {
         private PerformanceCounter memoryCounter;
         private DispatcherTimer ramUsageTimer;
+
+        private ObservableCollection<ProcessInfo> processList = new ObservableCollection<ProcessInfo>();
 
         public MainWindow()
         {
@@ -44,12 +49,22 @@ namespace SystemDiagnostics
             Top = (SystemParameters.PrimaryScreenHeight - Height) / 2;
         }
 
+        public class ProcessInfo
+        {
+            public string Name { get; set; }
+            public double CPUUsage { get; set; }
+            public double RAMUsage { get; set; }
+            public double StorageUsage { get; set; }
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Left = (SystemParameters.PrimaryScreenWidth - Width) / 2;
             Top = (SystemParameters.PrimaryScreenHeight - Height) / 2;
 
             StartRamUsageTimer();
+
+            // Set the ItemsSource of the ListView to your processList collection.
         }
 
         private void StartRamUsageTimer()
@@ -68,6 +83,26 @@ namespace SystemDiagnostics
 
         private void UpdateSystemInfo()
         {
+            ProcessListView.ItemsSource = processList;
+
+            // Get the list of running processes
+            var processes = Process.GetProcesses()
+                                   .Select(process => new ProcessInfo
+                                   {
+                                       Name = process.ProcessName,
+                                       CPUUsage = GetCPUUsage(process),
+                                       RAMUsage = GetRAMUsage(process),
+                                       StorageUsage = GetStorageUsage(process),
+                                   })
+                                   .OrderByDescending(process => process.CPUUsage)
+                                   .Take(10) // Select the top 10 processes by CPU usage
+                                   .ToList();
+
+            // Add the top 10 processes to the processList collection
+            foreach (var process in processes)
+            {
+                processList.Add(process);
+            }
             UpdateCpuInfo();
             UpdateMemoryInfo();
             UpdateGpuInfo();
@@ -286,6 +321,110 @@ namespace SystemDiagnostics
             public string Drive { get; set; }
             public string FreeSpace { get; set; }
             public string DiskSpeed { get; set; } // Add this property for disk speed
+        }
+
+        private void UpdateTopProcesses(ResourceType resourceType)
+        {
+            // Get the list of running processes
+            var processes = Process.GetProcesses()
+                                   .Select(process => new
+                                   {
+                                       Name = process.ProcessName,
+                                       CPUUsage = GetCPUUsage(process),
+                                       RAMUsage = GetRAMUsage(process),
+                                       StorageUsage = GetStorageUsage(process),
+                                   })
+                                   .ToList();
+
+            // Choose a resource to sort by (CPU, RAM, or Storage)
+            IEnumerable<dynamic> sortedProcesses;
+
+            switch (resourceType)
+            {
+                case ResourceType.CPU:
+                    sortedProcesses = processes.OrderByDescending(process => process.CPUUsage);
+                    break;
+                case ResourceType.RAM:
+                    sortedProcesses = processes.OrderByDescending(process => process.RAMUsage);
+                    break;
+                case ResourceType.Storage:
+                    sortedProcesses = processes.OrderByDescending(process => process.StorageUsage);
+                    break;
+                default:
+                    return; // Handle invalid resource type or provide a default behavior
+            }
+
+            // Select the top 10 processes
+            var top10Processes = sortedProcesses.Take(10);
+
+            ProcessListView.Items.Clear(); // Remove this line
+
+            foreach (var process in top10Processes)
+            {
+                ListViewItem item = new ListViewItem();
+                item.Content = $"{process.Name} - CPU: {process.CPUUsage}% RAM: {process.RAMUsage} MB Storage: {process.StorageUsage} MB";
+                ProcessListView.Items.Add(item);
+            }
+        }
+
+        private enum ResourceType
+        {
+            CPU,
+            RAM,
+            Storage
+        }
+
+        private void CPUButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTopProcesses(ResourceType.CPU);
+        }
+
+        private void RAMButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTopProcesses(ResourceType.RAM);
+        }
+
+        private void StorageButton_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTopProcesses(ResourceType.Storage);
+        }
+        private float GetCPUUsage(Process process)
+        {
+            try
+            {
+                return process.TotalProcessorTime.Ticks / (float)TimeSpan.TicksPerSecond;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        private float GetRAMUsage(Process process)
+        {
+            try
+            {
+                return process.PrivateMemorySize64 / (1024 * 1024); // Convert to MB
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        private float GetStorageUsage(Process process)
+        {
+            // Implement a method to calculate storage usage for the process
+            // You may need to estimate or gather this information from an external source
+            return 0; // Replace with your implementation
+        }
+
+        private void ProcessListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ProcessListView.SelectedItem != null)
+            {
+                // Handle double-click action for the ProcessListView here
+            }
         }
     }
 }
