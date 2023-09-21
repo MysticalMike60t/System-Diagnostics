@@ -207,7 +207,7 @@
                     </Style>
                 </ScrollViewer.Resources>
                 <Grid>
-                    <StackPanel Grid.Row="1" Margin="20" VerticalAlignment="Top">
+                    <StackPanel Margin="20,20,20,0" VerticalAlignment="Top">
                         <Label Content="CPU Information:"
                    FontSize="16"
                    FontWeight="Bold"
@@ -258,15 +258,17 @@ Margin="5,0" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <ListView Name="DiskSpaceListView"
-          FontSize="14"
-          Foreground="#666"
-          HorizontalAlignment="Stretch"
-          VerticalAlignment="Stretch"
-          MouseDoubleClick="DiskSpaceListView_MouseDoubleClick">
+    FontSize="14"
+    Foreground="#666"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    Margin="0, 0, 0, 20"                                  
+    MouseDoubleClick="DiskSpaceListView_MouseDoubleClick">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Drive" Width="100" DisplayMemberBinding="{Binding Drive}" />
                                         <GridViewColumn Header="Free Space" Width="150" DisplayMemberBinding="{Binding FreeSpace}" />
+                                        <GridViewColumn Header="Disk Speed" Width="150" DisplayMemberBinding="{Binding DiskSpeed}" />
                                     </GridView>
                                 </ListView.View>
                             </ListView>
