@@ -168,7 +168,6 @@
         </ControlTemplate>
     </Window.Resources>
 
-
     <Grid>
         <Grid x:Name="TitleBar" Background="#2196F3" MouseLeftButtonDown="CustomTitleBar_MouseLeftButtonDown" Height="30" VerticalAlignment="Top" Margin="0,0,0,-30">
             <TextBlock Text="System Diagnostics Dashboard"

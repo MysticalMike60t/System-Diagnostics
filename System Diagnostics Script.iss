@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "System Diagnostics"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.0.2"
 #define MyAppPublisher "CadenF"
 #define MyAppURL "https://www.cadenmf.com/"
 #define MyAppExeName "SystemDiagnostics.exe"

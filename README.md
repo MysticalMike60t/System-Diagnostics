@@ -10,7 +10,7 @@ System Information: Get detailed information about your hardware and software co
 Operating System: Windows 10 or later
 Processor: Intel Core i5 or equivalent
 RAM: 1GB minimum, 4GB recommended
-Storage: 100MB for installation, additional space for logs and reports
+Storage: 10MB for installation, additional space for logs and reports
 Internet Connection: Required for updates and security checks
 
 ### Installation
@@ -27,8 +27,10 @@ We value your feedback and continuously strive to improve System Diagnostics. Pl
 
 ### Version History
 Version 1.0 (Initial Release) - Release Notes
+<br/>
+Version 1.0.1 (Release) - Release Notes
 <br />
-Version 1.1 (Current Version) - Release Notes
+Version 1.0.2 (Current Version) - Release Notes
 
 ### Disclaimer
 This program is a diagnostic and monitoring tool intended for informational purposes. It does not replace professional IT support or security software. Use it responsibly and in accordance with local laws and regulations.
