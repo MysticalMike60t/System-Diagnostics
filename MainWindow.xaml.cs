@@ -18,7 +18,7 @@ namespace SystemDiagnostics
         private DispatcherTimer ramUsageTimer;
 
         private DispatcherTimer liveUpdateTimer;
-        private const int LiveUpdateIntervalInSeconds = 10; // Set the update interval as needed (in seconds)
+        private const int LiveUpdateIntervalInSeconds = 10;
 
         private List<ProcessInfo> topProcesses = new List<ProcessInfo>();
 
@@ -35,7 +35,7 @@ namespace SystemDiagnostics
             CenterWindowOnScreen();
             UpdateSystemInfo();
 
-            InitializeLiveUpdateTimer(); // Add this line to initialize the live update timer
+            InitializeLiveUpdateTimer();
         }
 
 
@@ -56,7 +56,7 @@ namespace SystemDiagnostics
         {
             liveUpdateTimer = new DispatcherTimer();
             liveUpdateTimer.Interval = TimeSpan.FromSeconds(LiveUpdateIntervalInSeconds);
-            liveUpdateTimer.Tick += (sender, e) => UpdateTopProcesses(ResourceType.CPU); // Update the top CPU processes
+            liveUpdateTimer.Tick += (sender, e) => UpdateTopProcesses(ResourceType.CPU);
             liveUpdateTimer.Start();
         }
 
@@ -80,8 +80,6 @@ namespace SystemDiagnostics
             Top = (SystemParameters.PrimaryScreenHeight - Height) / 2;
 
             StartRamUsageTimer();
-
-            // Set the ItemsSource of the ListView to your processList collection.
         }
 
         private void StartRamUsageTimer()
@@ -102,7 +100,6 @@ namespace SystemDiagnostics
         {
             topProcesses.Clear();
 
-            // Get the list of running processes
             var processes = Process.GetProcesses()
                                    .Select(process => new ProcessInfo
                                    {
@@ -112,13 +109,11 @@ namespace SystemDiagnostics
                                        StorageUsage = GetStorageUsage(process),
                                    })
                                    .OrderByDescending(process => process.CPUUsage)
-                                   .Take(10) // Select the top 10 processes by CPU usage
+                                   .Take(10)
                                    .ToList();
 
-            // Update the ListView with the new top processes
             ProcessListView.ItemsSource = processes;
 
-            // Add the top 10 processes to the processList collection
             foreach (var process in processes)
             {
                 processList.Add(process);
@@ -190,7 +185,6 @@ namespace SystemDiagnostics
                     string driveLetter = drive.Name;
                     string freeSpace = $"{(double)drive.TotalFreeSpace / (1024 * 1024 * 1024):F2} GB";
 
-                    // Calculate disk speed (read/write speed)
                     double diskSpeed = CalculateDiskSpeed(drive);
 
                     string diskSpeedInfo = $"{diskSpeed:F2} MB/s";
@@ -204,13 +198,12 @@ namespace SystemDiagnostics
 
         private double CalculateDiskSpeed(DriveInfo drive)
         {
-            const int bufferSize = 1024 * 1024; // 1 MB buffer size
+            const int bufferSize = 1024 * 1024;
             byte[] buffer = new byte[bufferSize];
             double readSpeed = 0.0, writeSpeed = 0.0;
 
             try
             {
-                // Measure read speed
                 using (var fileStream = new FileStream(Path.Combine(drive.RootDirectory.FullName, "read_speed_test.tmp"), FileMode.Create, FileAccess.ReadWrite, FileShare.None))
                 {
                     Stopwatch stopwatch = Stopwatch.StartNew();
@@ -219,10 +212,9 @@ namespace SystemDiagnostics
                         fileStream.Write(buffer, 0, buffer.Length);
                     }
                     stopwatch.Stop();
-                    readSpeed = (double)fileStream.Length / (stopwatch.ElapsedMilliseconds * 1000); // MB/s
+                    readSpeed = (double)fileStream.Length / (stopwatch.ElapsedMilliseconds * 1000);
                 }
 
-                // Measure write speed
                 using (var fileStream = new FileStream(Path.Combine(drive.RootDirectory.FullName, "write_speed_test.tmp"), FileMode.Open, FileAccess.ReadWrite, FileShare.None))
                 {
                     Stopwatch stopwatch = Stopwatch.StartNew();
@@ -231,21 +223,19 @@ namespace SystemDiagnostics
                         fileStream.Read(buffer, 0, buffer.Length);
                     }
                     stopwatch.Stop();
-                    writeSpeed = (double)fileStream.Length / (stopwatch.ElapsedMilliseconds * 1000); // MB/s
+                    writeSpeed = (double)fileStream.Length / (stopwatch.ElapsedMilliseconds * 1000);
                 }
 
                 // Delete test files
                 File.Delete(Path.Combine(drive.RootDirectory.FullName, "read_speed_test.tmp"));
                 File.Delete(Path.Combine(drive.RootDirectory.FullName, "write_speed_test.tmp"));
 
-                // Return the average of read and write speeds
                 return (readSpeed + writeSpeed) / 2.0;
             }
             catch (Exception ex)
             {
-                // Handle the exception here (e.g., log it or display an error message)
                 Console.WriteLine($"An error occurred while measuring disk speed: {ex.Message}");
-                return 0.0; // Return a default value or handle the error as needed
+                return 0.0;
             }
         }
 
@@ -340,12 +330,11 @@ namespace SystemDiagnostics
         {
             public string Drive { get; set; }
             public string FreeSpace { get; set; }
-            public string DiskSpeed { get; set; } // Add this property for disk speed
+            public string DiskSpeed { get; set; }
         }
 
         private void UpdateTopProcesses(ResourceType resourceType)
         {
-            // Get the list of running processes and convert them to ProcessInfo objects
             var processes = Process.GetProcesses()
                                    .Select(process => new ProcessInfo
                                    {
@@ -426,7 +415,7 @@ namespace SystemDiagnostics
         {
             try
             {
-                return process.PrivateMemorySize64 / (1024 * 1024); // Convert to MB
+                return process.PrivateMemorySize64 / (1024 * 1024);
             }
             catch (Exception)
             {
@@ -436,9 +425,7 @@ namespace SystemDiagnostics
 
         private float GetStorageUsage(Process process)
         {
-            // Implement a method to calculate storage usage for the process
-            // You may need to estimate or gather this information from an external source
-            return 0; // Replace with your implementation
+            return 0;
         }
 
         private void ProcessListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -457,14 +444,13 @@ namespace SystemDiagnostics
                 string processName = button.Tag as string;
                 if (!string.IsNullOrEmpty(processName))
                 {
-                    // Find the process by name and try to end it
                     Process[] processes = Process.GetProcessesByName(processName);
                     if (processes.Length > 0)
                     {
                         try
                         {
-                            processes[0].Kill(); // End the process
-                            UpdateSystemInfo(); // Refresh the process list after ending the task
+                            processes[0].Kill(); 
+                            UpdateSystemInfo();
                         }
                         catch (Exception ex)
                         {
@@ -478,6 +464,10 @@ namespace SystemDiagnostics
                 }
             }
         }
-
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Minimize the window
+            this.WindowState = WindowState.Minimized;
+        }
     }
 }

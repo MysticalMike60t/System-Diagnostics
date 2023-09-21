@@ -176,6 +176,17 @@
                    Foreground="White"
                    VerticalAlignment="Center"
                    Margin="10,0" />
+            <Button Content="_"
+        Width="20"
+        Height="20"
+        FontSize="12"
+        Foreground="White"
+        Background="Transparent"
+        BorderBrush="Transparent"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Right"
+        Margin="0,0,35,0"
+        Click="MinimizeButton_Click" />
             <Button Content="X"
                 Width="20"
                 Height="20"
